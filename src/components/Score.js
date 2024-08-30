@@ -1,18 +1,6 @@
 import { useState } from "react";
 
-const Score = ({ playerScore, playerName }) => {
-  const [score, setScore] = useState(playerScore);
-
-  const scorePlus = () => {
-    setScore(score + 1);
-  };
-  const scoreMinus = () => {
-    setScore(score - 1);
-  };
-  if (score === 20) {
-    alert("Winner: " + playerName);
-  }
-
+const Score = ({ playerScore, playerName, scorePlus, scoreMinus }) => {
   return (
     <div>
       <div className="flex justify-between  border-b-[1px] border-solid border-gray-300">
@@ -24,7 +12,7 @@ const Score = ({ playerScore, playerName }) => {
           >
             -
           </button>
-          <p className="flex justify-center items-center">{score}</p>
+          <p className="flex justify-center items-center">{playerScore}</p>
 
           <button
             onClick={scorePlus}

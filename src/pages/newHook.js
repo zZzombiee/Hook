@@ -2,7 +2,7 @@ import { useState } from "react";
 import Tsom from "@/components/Tsom";
 import Score from "@/components/Score";
 
-const players = [
+const data = [
   {
     id: 1,
     playerName: "John Cena",
@@ -21,25 +21,26 @@ const players = [
 ];
 
 const playScorePage = () => {
-  const [scores, setScores] = useState(players);
-  const resetScore = () => {
-    scores.map((score, index) => {
-      const newPlayerScore = [score];
-      score = { newScore: score.playerScore };
-      // console.log(score);
-      newPlayerScore.push(score);
-      console.log(newPlayerScore);
+  const [players, setScore] = useState(data);
 
-      return newPlayerScore;
-    });
-    return setScores(scores[0].playerScore);
+  const scorePlus = (index) => {
+    const copyPlayers = [...players];
+    copyPlayers[index].playerScore += 1;
+    console.log(players[index].playerScore);
+    setScore(copyPlayers);
   };
-  console.log(resetScore);
-  // const increment = (index) => {
-  //   const updatedScore = [...playerScore];
-  //   updatedScore[index].playerScore += 1;
-  //   setScores(updatedScore);
-  // };
+  const scoreMinus = (index) => {
+    const copyPlayers = [...players];
+    copyPlayers[index].playerScore -= 1;
+    setScore(copyPlayers);
+  };
+  const resetScore = () => {
+    setScore(players.playerScore);
+  };
+  // if (copyPlayers[index].playerScore === 20) {
+  //   alert("Winner: " + playerName);
+  // }
+
   return (
     <div className="w-[530px] rounded-lg flex flex-col justify-center mx-auto border border-solid border-gray-300 p-8 mt-48">
       <div className="flex flex-col">
@@ -50,34 +51,27 @@ const playScorePage = () => {
         <p className="text-sm font-light">Hidden in the middle of text</p>
       </div>
 
-      {scores.map((player, index) => {
+      {players.map((player, index) => {
         return (
           <Score
             key={index}
             playerScore={player.playerScore}
             playerName={player.playerName}
+            scorePlus={() => {
+              scorePlus(index);
+            }}
+            scoreMinus={() => {
+              scoreMinus(index);
+            }}
           />
         );
       })}
-      {/* {scores.map((score, index) => {
-        const newPlayerScore = [score];
-        score = { newScore: score.playerScore };
-        console.log(score);
-        newPlayerScore.push(score);
-        console.log(newPlayerScore);
-
-        return (
-          <Score
-            key={index}
-            playerScore={score.newScore}
-            playerName={player.playerName}
-          />
-        );
-      })} */}
 
       <div className="flex mt-20 justify-end">
         <button
-          onClick={resetScore}
+          onClick={() => {
+            resetScore;
+          }}
           className=" flex justify-center bg-green-500 w-[120px] h-14 items-center rounded-lg text-white"
         >
           Reset
